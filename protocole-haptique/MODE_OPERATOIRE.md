@@ -87,6 +87,18 @@ Aides en séance (aucune ne cote à la place de l'observateur) :
 - Ces fichiers contiennent des données de santé pseudonymisées : ne pas les partager ni les
   placer dans un stockage en ligne.
 
+### Retrouver, reprendre, afficher en grand
+- **Rechercher** : dans « Participants et bilans », le champ « Rechercher un code » filtre la
+  liste (tri par code ou par activité récente) ; le panneau Sessions a sa propre recherche
+  (code, date jj/mm/aaaa, condition).
+- **Reprise rapide** : en tête de l'étape Session, « Sessions récentes » (5 autres sessions)
+  ouvre une session à l'étape où il reste à saisir ; « Nouvelle session pour <code> »
+  apparaît quand la session courante est vierge.
+- **Numéro proposé** : si le code correspond à un participant ayant d'autres sessions et que
+  le numéro est vide, le numéro suivant est proposé (jamais d'écrasement).
+- **Affichage grand** (bouton d'en-tête, pour tablette) : texte et boutons de cotation
+  agrandis, items sur une colonne ; l'impression n'est pas modifiée.
+
 ### Ce que l'outil ne fait pas
 - Il n'envoie rien : pas de serveur, pas de compte, pas de synchronisation. Le
   transfert entre postes passe par les fichiers exportés (import JSON possible).
@@ -1341,3 +1353,43 @@ quand l'appli est fermée » et « Récupérer les résultats ».
 ### E5. Poids et hygiène
 Fichier de moins de 307 200 octets. Aucun caractère invisible ni espace exotique, aucune
 attribution ni commentaire de génération.
+
+---
+
+## F. Ergonomie globale (retrouver, remplir l'en-tête, affichage Grand)
+
+### F0. Activation du dossier sans écrasement
+À l'activation du dossier (choix, ou réactivation après autorisation à renouveler) et avant
+toute écriture, l'appli lit le dossier, fusionne par `id` (la plus récente `modifie_le`
+l'emporte, sessions inconnues conservées), puis écrit. Message « n session(s) retrouvée(s)
+dans le dossier » quand n > 0. Un fichier de session n'est pas réécrit par une version plus
+ancienne que celle lue dans le dossier.
+
+### F1. Retrouver
+- `#recherche-participant` (type search, « Rechercher un code »), `#compte-participants`,
+  `#aucun-resultat` (« Aucun participant ne correspond »), `#tri-participants` (`code` par
+  défaut, `recent`). Filtre conservé fiche -> liste, vidé à la fermeture de la vue.
+- `#recents-details` (ouvert) et `#recents` : jusqu'à 5 autres sessions par `modifie_le`
+  décroissant, `button[data-ouvrir-recent]`, « code | S<n> | jj/mm/aaaa | Cond. X | étape ».
+- `GrilleHaptique.etapeReprise(session)` : `session`, `t0`, `t1`, `t2` ou `synthese`.
+- `#recherche-session` et `#aucune-session` (« Aucune session ne correspond »).
+- `#btn-reprendre-dernier` : session courante vierge et autre session avec code.
+
+### F2. En-tête
+Listes `#liste-codes`, `#liste-observateurs`, `#liste-diagnostics` ; « Numéro proposé : n » ;
+`data-complet` sur l'étape Session ; heure de début renseignée au démarrage du minuteur en
+T0 ou T1 si `#f-debut` est vide.
+
+### F3. Affichage
+`#btn-affichage` (`aria-pressed`), `document.documentElement.dataset.affichage` =
+`standard` (défaut) ou `grand`, mémorisé dans `grilleHaptique.v1.affichage`,
+`GrilleHaptique.affichage()`. Grand : base 18 px, boutons de cotation 60 px et 1,4 rem,
+items sur une colonne, boutons d'étape et de navigation 52 px, sans défilement horizontal.
+
+### F4. Ancre d'échelle
+`.ancre` dans chaque item, visible quand l'item contient le focus, avec la définition de la
+valeur du bouton focalisé (`data-ancre-valeur`). Informatif : n'écrit rien.
+
+### F5. Rappel T0
+`#rappel-t0` en tête de l'étape T2 : cinq cellules `[data-rappel-t0]` en lecture seule,
+`data-valeur`, mises à jour en direct.
