@@ -70,6 +70,23 @@ Aides en séance (aucune ne cote à la place de l'observateur) :
 17. Ces fichiers contiennent des données de santé pseudonymisées : les ranger et les
     transmettre comme les exports JSON et CSV. « Retour à la saisie » revient à la grille.
 
+### Où sont les résultats quand l'appli est fermée
+- Dans le **stockage du navigateur de ce poste** : les sessions y sont enregistrées à chaque
+  modification et y restent à la fermeture de l'onglet ou du navigateur. Elles sont effacées si
+  l'on vide les données du navigateur, et elles sont propres à un navigateur et à un poste (un
+  autre navigateur, ou le même navigateur sur un autre poste, ne les voit pas). Le panneau
+  Sessions indique si le navigateur a accordé un stockage durable.
+- Et, si la **sauvegarde dans un dossier** est activée (panneau Sessions, « Choisir un dossier de
+  sauvegarde », Chrome ou Edge sur ordinateur), dans ce dossier local : une sauvegarde complète
+  et un fichier `.json` par session, rangé dans un sous-dossier par participant.
+
+### Récupérer les résultats
+- L'appli n'a ni serveur, ni compte, ni envoi de données, et aucune consultation à distance.
+- Pour retrouver des résultats, importer le fichier `.json` (« Importer un fichier JSON »)
+  ou le dossier de sauvegarde (« Importer depuis le dossier ») dans l'appli, sur le poste de travail.
+- Ces fichiers contiennent des données de santé pseudonymisées : ne pas les partager ni les
+  placer dans un stockage en ligne.
+
 ### Ce que l'outil ne fait pas
 - Il n'envoie rien : pas de serveur, pas de compte, pas de synchronisation. Le
   transfert entre postes passe par les fichiers exportés (import JSON possible).
@@ -1184,3 +1201,143 @@ proposée ou écrite automatiquement ; aucun son. Tests : `tests/ergonomie.test.
   URL externe. `@media print` redéfinit tous les jetons de couleur en clair. Les caractères
   non-caractères U+FFFE et U+FFFF de `esc()` sont écrits en séquences d'échappement.
 - Barre d'étapes : compteur mono, barre de progression de 3 px et coche (SVG) pour `t0`, `t1`, `t2`.
+
+---
+
+## E. Bilan visuel de session, sauvegarde dans un dossier, stockage durable
+
+Cette partie s'ajoute à A, B, C et D. Elle ne modifie aucun contrat existant. Aucune donnée de
+santé réelle dans les tests et les captures (jeux fictifs seulement). Aucune requête réseau,
+aucune ressource externe, aucune clé `localStorage` nouvelle. Les nouveaux éléments n'emploient
+pas les `data-*` existants (`data-rate`, `data-item`, `data-obs`, `data-step`, `data-panel`,
+`data-etat`, `data-cellule`, `data-point`, `data-x`, `data-y`, etc.) : ils emploient `data-vis`,
+`data-cle`, `data-valeur`, `data-ratio`, `data-temps`, `data-code`, `data-delta`.
+
+### E1. Bilan visuel de session (étape Synthèse)
+Conteneur `#bilan-visuel`, premier bloc de `section[data-panel="synthese"]` (les `#score-*`,
+`[data-manquants]`, la liste « À compléter » et les exports restent). Il est redessiné à chaque
+affichage de l'étape, à chaque modification de données tant qu'elle est affichée, et avant
+l'impression (il s'imprime avec la session). Les SVG sont créés par `createElementNS`,
+`setAttribute` et `textContent` (jamais `innerHTML`). Les couleurs viennent des jetons `--bil-*`
+existants (cotation 0 à 3, NA hachuré, T2, conditions) et de la charte, en clair, en sombre, et
+en clair à l'impression. Chaque `svg` porte `role="img"` et un `aria-label` résumant son contenu.
+Le bilan est lisible de 360 px à l'écran large, sans défilement horizontal de la page.
+
+`GrilleHaptique.bilanVisuel()` renvoie, pour la session courante (modèle pur, sans DOM) :
+
+```
+{ total:{valeur,min:-3,max:39,manquants},
+  axes:[{cle:"axe1"|"axe2"|"axe3"|"axe4",libelle,valeur,min,max,manquants} x4],
+        // min/max : axe1 -3/9, axe2 0/12, axe3 0/9, axe4 0/9 ; valeur = scores existants (null si non calculable)
+  items:[{code,groupe:"T0"|"AXE1"|"AXE2"|"AXE3"|"AXE4",valeur:0|1|2|3|"NA"|null} x19],
+  t2:[{cle:"tonus"|"posture"|"emotion"|"relation",libelle,valeur:-1|0|1|null} x4],
+  physio:[{cle:"fc"|"vfc"|"ced"|"spo2",libelle,unite,points:[{temps:"t0"|"t1"|"rupture"|"t2",valeur:number|null} x4]} x4],
+  precedente:null | {id,session_no,date,deltas:{axe1,axe2,axe3,axe4,total}} }
+```
+
+`precedente` est la session précédente du même participant (C1 : même code non vide, casse
+ignorée), dans l'ordre chronologique C1.2, avant la session courante ; `null` s'il n'y en a pas
+ou si le code est vide. `deltas` = courante moins précédente, `null` si l'un des deux est `null`.
+Les libellés de `t2` sont courts (Tonus, Posture, Émotion, Relation).
+
+Éléments, tous dans `#bilan-visuel` :
+1. `#vis-jauge` : jauge en demi-cercle de l'indice global (conteneur `role="img"` portant
+   l'`aria-label`, qui contient le `svg`). `[data-vis="jauge-arc"]` porte `data-ratio` =
+   (valeur - min) / (max - min) borné à [0, 1], arrondi à 3 décimales ; l'attribut est absent si la
+   valeur est `null`. Le texte central est la valeur ou « - ». `aria-label` : « Indice global :
+   20 sur 39 » ou « Indice global : non calculable ».
+2. `#vis-radar` : radar des 4 axes (axe 1 en haut, 2 à droite, 3 en bas, 4 à gauche). Un
+   `[data-vis="radar-sommet"][data-cle="axeN"]` par axe, avec `data-valeur` (vide si `null`) et
+   `data-ratio` (même formule, avec min et max de l'axe ; absent si `null`) ; un polygone
+   `[data-vis="radar-forme"]` (le sommet d'un axe `null` est placé au centre) ; 4 anneaux de
+   référence `[data-vis="radar-anneau"]` (25, 50, 75, 100 %) ; étiquettes des axes avec la valeur.
+3. `#vis-bande-items` : une cellule `[data-vis="cellule"][data-code="T0.1"]` par item (19 ; ordre
+   T0.1 à T0.5 puis V1.1 à V4.3), disposées en une ligne par groupe (T0, Axe 1 à Axe 4), avec
+   `data-valeur` (« 0 » à « 3 », « NA », vide si non coté), colorée comme les grilles du bilan
+   participant (C3). `#vis-legende-items` : légende des 5 états (0, 1, 2, 3, NA) ; une case vide
+   signifie « non coté ».
+4. `#vis-t2` : 4 repères `[data-vis="t2"][data-cle="tonus|posture|emotion|relation"]` avec
+   `data-valeur` (« -1 », « 0 », « 1 », vide) : triangle haut (+1), carré (0), triangle bas (-1),
+   couleur de la palette T2, valeur et libellé court.
+5. `#vis-physio` : pour chaque mesure ayant au moins une valeur, un mini graphique `svg`
+   `[data-vis="physio"][data-cle="fc"]` à 4 positions fixes en abscisse (T0, T1, Rupture, T2).
+   `[data-vis="physio-point"][data-cle="fc"][data-temps="t1"]` porte `data-valeur` pour chaque
+   valeur non nulle ; une polyligne `[data-vis="physio-ligne"]` relie les points consécutifs non
+   nuls (une valeur absente interrompt la ligne). L'ordonnée est mise à l'échelle sur [min, max]
+   de la série ; une seule valeur, ou une série constante, est placée au centre. Les valeurs sont
+   écrites près des points, l'unité en légende. Une mesure sans aucune valeur est omise ; sans
+   aucune valeur du tout, `#vis-physio` contient le texte « Aucune mesure saisie ».
+6. `#vis-comparaison` : si `precedente`, 5 repères `[data-vis="delta"][data-cle="axe1|axe2|axe3|axe4|total"]`
+   avec `data-delta` (« +3 », « -2 », « 0 », vide si non calculable), flèche (haut, bas, égal) et
+   texte, puis la mention « par rapport à S<n> (jj/mm/aaaa) ». Sinon, si le code est non vide :
+   « Première session de ce participant ». Si le code est vide : élément vide (son bloc est masqué).
+
+### E2. Sauvegarde automatique dans un dossier (Chromium : Chrome, Edge)
+Le panneau Sessions (`#panneau-sessions`) contient un bloc de sauvegarde :
+`#btn-dossier-sauvegarde` (« Choisir un dossier de sauvegarde »), `#etat-dossier` (texte d'état,
+attribut `data-etat-dossier`), `#aide-dossier`, `#btn-dossier-reautoriser` (« Réactiver la
+sauvegarde dans le dossier », visible seulement à l'état `a-reautoriser`) et `#btn-lire-dossier`
+(« Importer depuis le dossier », visible si un dossier est actif). Texte exact de `#aide-dossier` :
+« Sauvegarde locale en fichiers sur ce poste, un dossier par participant. Ce sont des données de
+santé pseudonymisées : ne les placez pas dans un stockage partagé ou en ligne. Pour retrouver des
+résultats, importez les fichiers .json dans l'appli sur ce poste. »
+
+- **Détection** : sans `window.showDirectoryPicker`, `#btn-dossier-sauvegarde` est désactivé,
+  `#aide-dossier` dit « Disponible dans Chrome et Edge sur ordinateur » et l'état est `indisponible`.
+- **Choix** : `showDirectoryPicker({mode:"readwrite"})`, sur geste utilisateur. Annulation
+  (`AbortError`) : état inchangé, aucun message d'erreur.
+- **API de fichiers utilisées, et seulement celles-ci** (un faux dossier en mémoire suffit aux
+  tests) : `name`, `kind`, `getDirectoryHandle(nom,{create})`, `getFileHandle(nom,{create})`,
+  `removeEntry(nom)`, `values()` (itérateur asynchrone), `queryPermission({mode:"readwrite"})`,
+  `requestPermission({mode:"readwrite"})`, `createWritable()` puis `write(chaine)` et `close()`,
+  `getFile()` puis `text()`.
+- **Écritures** : après chaque enregistrement local réussi, avec anti-rebond de 1,5 s
+  (`GrilleHaptique.ecrireDossier()` force l'écriture immédiate et renvoie une promesse), et à
+  l'activation du dossier : (a) `grille-haptique_sauvegarde.json` à la racine = sauvegarde
+  complète (même contenu que `#btn-export-tout`) ; (b) pour chaque session, un fichier dans un
+  sous-dossier par participant : `<code>/grille-haptique_<code>_S<n>_<date>_<id>.json`, contenu =
+  la session (schéma `grille-haptique/1`, même JSON que `#btn-export-json`). `<code>` est le code
+  affiché ; sous-dossier `sans-code` s'il est vide ; les parties vides du nom sont remplacées par
+  `x` (B8). Un fichier n'est réécrit que si la session a changé depuis sa dernière écriture
+  (comparaison de `modifie_le`) ; la sauvegarde complète n'est réécrite que si l'ensemble a changé.
+  Dans le nom, les caractères de `<id>` autres que lettres, chiffres, `_` et `-` sont remplacés par `-`.
+- **Suppression d'une session** (panneau Sessions, vue Participants, effacement total) :
+  suppression au mieux de son fichier (recherche, dans le sous-dossier de son ancien code, des
+  fichiers finissant par `_<id>.json`), pour qu'une lecture ultérieure ne la ressuscite pas ; la
+  sauvegarde complète est réécrite. Les sous-dossiers devenus vides ne sont pas supprimés.
+- **Changement de code, de numéro ou de date** d'une session : l'ancien fichier (même `<id>`)
+  est supprimé et le nouveau écrit.
+- **Lecture** : `#btn-lire-dossier` (et `GrilleHaptique.lireDossier()`, promesse du nombre de
+  sessions importées) lit récursivement tous les `*.json` du dossier choisi, ignore sans message
+  ceux qui ne sont pas au schéma `grille-haptique/1`, accepte une session seule ou une sauvegarde
+  complète, fusionne par `id` comme l'import (la plus récente `modifie_le` l'emporte), affiche
+  « n session(s) importée(s) depuis le dossier » dans le message du panneau et redessine la vue ouverte.
+- **Mémorisation** : le handle du dossier est mémorisé dans IndexedDB (base
+  `grilleHaptique.v1.dossier`). Un échec de mémorisation (IndexedDB absent, objet non clonable)
+  est toléré : l'état est `actif` pour cette page seulement, sans erreur bloquante. Au chargement,
+  si un handle est retrouvé, `queryPermission` donne : `granted` : état `actif` (écriture reprise) ;
+  `prompt` : état `a-reautoriser` (le bouton appelle `requestPermission` sur geste utilisateur) ;
+  `denied` ou erreur : état `inactif`.
+- **Erreurs d'écriture** : jamais bloquantes ; état `erreur` avec message dans `#etat-dossier`,
+  nouvelle tentative à la modification suivante ; l'enregistrement `localStorage` n'est jamais affecté.
+- **États** de `#etat-dossier` (`data-etat-dossier`) : `indisponible`, `inactif`, `actif`,
+  `a-reautoriser`, `erreur`. Texte à l'état actif : « Sauvegarde dans le dossier <nom> : dernière
+  écriture à hh:mm ».
+- `GrilleHaptique.dossier()` renvoie `{etat, nom, derniereEcriture}` (`nom` vaut `""` sans dossier ;
+  `derniereEcriture` en ISO ou `null`).
+- Aucune requête réseau, aucune clé `localStorage` nouvelle.
+
+### E3. Stockage durable
+Au chargement, l'appli appelle `navigator.storage.persist()` si l'API existe (sans geste).
+`#etat-stockage`, dans le panneau Sessions, affiche « Stockage durable : oui », « Stockage durable :
+non (le navigateur peut l'effacer ; utilisez la sauvegarde dans un dossier) » ou « Stockage durable :
+inconnu ». `GrilleHaptique.stockageDurable()` renvoie `true`, `false` ou `null`. Aucune erreur si
+l'API est absente.
+
+### E4. Documentation
+Ce document : la présente partie E, et dans la partie A les paragraphes « Où sont les résultats
+quand l'appli est fermée » et « Récupérer les résultats ».
+
+### E5. Poids et hygiène
+Fichier de moins de 307 200 octets. Aucun caractère invisible ni espace exotique, aucune
+attribution ni commentaire de génération.

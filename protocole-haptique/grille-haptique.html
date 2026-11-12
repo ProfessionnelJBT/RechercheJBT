@@ -334,7 +334,49 @@ figcaption{margin:0 0 4px;font-size:.933rem;font-weight:600;overflow-wrap:anywhe
 .page-h h2{color:var(--titre)}
 .carte,.item{box-shadow:none}
 }
+#bilan-visuel{margin:0 0 14px;padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-1)}
+#bilan-visuel>h3{margin:0 0 10px;font-size:.933rem}
+.bv-grille{display:grid;grid-template-columns:minmax(0,1fr);gap:4px 20px}
+@media (min-width:720px){.bv-grille{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.bv-bloc{min-width:0;margin:0 0 12px}
+.bv-bloc h4{margin:0 0 6px;font-size:.933rem;color:var(--teal-deep)}
+.bv-fig{max-width:100%}
+.bv-fig .bv,.bv-physio .bv{max-width:100%;height:auto;margin:0 auto}
+.bv-piste{fill:none;stroke:var(--bil-cot-0);stroke-width:18}
+.bv-arc{fill:none;stroke:var(--bil-cot-3);stroke-width:18}
+.bv-rep{stroke:var(--line-3);stroke-width:2}
+.bil text.bv-grand{fill:var(--ink)}
+.bv-anneau{fill:none;stroke:var(--line-2);stroke-width:1;stroke-dasharray:3 3}
+.bv-forme{fill:var(--teal);fill-opacity:.28;stroke:var(--teal);stroke-width:2;stroke-linejoin:round}
+.bv-sommet,.bv-pt{fill:var(--teal);stroke:var(--panel);stroke-width:2}
+.bv-pointille{stroke-dasharray:3 3}
+.bv-c-0{fill:var(--bil-cot-0)}.bv-c-1{fill:var(--bil-cot-1)}.bv-c-2{fill:var(--bil-cot-2)}.bv-c-3{fill:var(--bil-cot-3)}.bv-c-na{fill:var(--bil-cot-na)}
+.bv-leg{list-style:none;margin:8px 0 6px;padding:0;display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.8rem}
+.bv-leg li{display:flex;align-items:center;gap:6px}
+.sw{display:inline-flex;align-items:center;justify-content:center;width:24px;height:18px;border:1px solid var(--line-3);border-radius:2px;font-family:var(--mono);font-size:.7rem;font-weight:700}
+.sw-0{background:var(--bil-cot-0);color:var(--bil-cot-txt-0)}.sw-1{background:var(--bil-cot-1);color:var(--bil-cot-txt-1)}.sw-2{background:var(--bil-cot-2);color:var(--bil-cot-txt-2)}.sw-3{background:var(--bil-cot-3);color:var(--bil-cot-txt-3)}
+.sw-na{background-color:var(--bil-cot-na);background-image:repeating-linear-gradient(45deg,transparent 0 3px,var(--bil-cot-na-trait) 3px 4px);color:var(--bil-cot-txt-na)}
+.bv-note{margin:4px 0 0;font-size:.8rem;color:var(--ink-2)}
+.bv-physio{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px}
+.bv-physio-fig{margin:0;min-width:0}
+.bv-physio-fig figcaption{margin:0 0 2px;font-size:.8rem;font-weight:600}
+.bv-deltas{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.bv-delta{display:flex;align-items:center;gap:6px;min-height:36px;padding:4px 10px;border:1px solid var(--line-2);border-radius:var(--r-sm);background:var(--panel-2);font-size:.867rem}
+.bv-delta strong{font-family:var(--mono)}
+.bv-fleche{flex:none}
+.bv-fleche path{fill:currentColor;stroke:none}
+.bv-f-egal path,.bv-f-nd path{fill:none;stroke:currentColor;stroke-width:2}
+.bv-f-haut{color:var(--teal-deep)}.bv-f-bas{color:var(--ochre)}.bv-f-egal,.bv-f-nd{color:var(--ink-2)}
+#bloc-dossier{display:grid;gap:8px;margin:0 0 12px;padding:12px;border:1px solid var(--line);border-radius:var(--r)}
+#bloc-dossier h3{margin:0;font-size:.933rem}
+#bloc-dossier p{margin:0;font-size:.867rem}
+#etat-dossier[data-etat-dossier=erreur]{color:var(--rouille);font-weight:600}
+#etat-stockage{margin:0 0 12px;font-size:.867rem;color:var(--ink-2)}
 @media print{
+#bilan-visuel{margin:0 0 8px;padding:4px 6px;border:1px solid var(--line-3);border-radius:0;box-shadow:none}
+.bv-bloc{break-inside:avoid}
+.bv-grille{grid-template-columns:repeat(2,minmax(0,1fr))}
+.bv-physio{grid-template-columns:repeat(2,minmax(0,1fr))}
 :root,:root:not([data-theme="light"]),:root[data-theme="dark"]{--ground:#eef1f0;--panel:#fff;--panel-2:#f7f9f8;--panel-3:#e9eeec;--panel-4:#dfe6e3;--ink:#14201f;--ink-2:#41524f;--ink-3:#72837f;--ink-4:#93a29e;--line:#d5ddda;--line-2:#c0ccc8;--line-3:#a8b7b3;--teal:#0e6b62;--on-teal:#fff;--teal-soft:#d5e6e3;--teal-line:#8fc0b9;--teal-deep:#0a4a44;--ochre:#b3741b;--on-ochre:#fff;--ochre-soft:#f4e5c8;--ochre-line:#dcb469;--rouille:#a33b2c;--rouille-soft:#f6dfda;--rouille-line:#dfa599;--hatch:#9aa8a5;--hatch-bg:#e4e9e7;--track:#e2e8e6;--m1:#dce9e6;--m2:#a7ccc5;--m3:#4d9a90;--m4:#0a5f57;--shadow-1:0 1px 2px rgba(20,32,31,.07);--shadow-2:0 1px 2px rgba(20,32,31,.06),0 10px 28px -14px rgba(20,32,31,.28);--marine:#2f2c62;--marine-2:#403c7f;--on-marine:#fff;--marine-clair:#a9a6ea;--on-marine-clair:#14123a;--bil-cond-a:#ffffff;--bil-cond-a-trait:#41524f;--bil-cond-a-lettre:#14201f;--bil-cond-b:#2f2c62;--bil-cond-c:#2f2c62;--bil-cond-lettre:#ffffff;--bil-cond-x:#e9eeec;--bil-cond-x-trait:#72837f;--bil-cond-x-lettre:#14201f;--bil-cot-0:#dce9e6;--bil-cot-txt-0:#14201f;--bil-cot-1:#a7ccc5;--bil-cot-txt-1:#14201f;--bil-cot-2:#4d9a90;--bil-cot-txt-2:#14201f;--bil-cot-3:#0a5f57;--bil-cot-txt-3:#ffffff;--bil-cot-na:#e4e9e7;--bil-cot-na-trait:#9aa8a5;--bil-cot-txt-na:#41524f;--bil-t2-neg:#f4e5c8;--bil-t2-neg-trait:#b3741b;--bil-t2-neg-txt:#14201f;--bil-t2-zero:#e4e9e7;--bil-t2-zero-txt:#14201f;--bil-t2-pos:#0e6b62;--bil-t2-pos-txt:#ffffff}
 @page{size:A4;margin:10mm}
 *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -482,6 +524,15 @@ figure.graphique,#table-sessions-participant tr{break-inside:avoid}
 <button type="button" id="btn-import-json" class="btn">Importer un fichier JSON</button>
 <button type="button" id="btn-imprimer" class="btn">Imprimer / PDF</button>
 <button type="button" id="btn-effacer-tout" class="btn btn-danger">Effacer les données de ce poste</button>
+</div>
+<div id="bloc-dossier">
+<h3>Sauvegarde dans un dossier</h3>
+<button type="button" id="btn-dossier-sauvegarde" class="btn">Choisir un dossier de sauvegarde</button>
+<p id="etat-dossier" role="status" data-etat-dossier="inactif"></p>
+<button type="button" id="btn-dossier-reautoriser" class="btn" hidden>Réactiver la sauvegarde dans le dossier</button>
+<button type="button" id="btn-lire-dossier" class="btn" hidden>Importer depuis le dossier</button>
+<p id="aide-dossier"></p>
+<p id="etat-stockage"></p>
 </div>
 <input type="file" id="in-import" accept=".json,application/json" hidden>
 <p id="message-sessions" role="status"></p>
@@ -812,6 +863,7 @@ function sauver(){
  stockageOk=ok;
  afficherStockage();
  majEtat(ok?"Enregistré à "+heureNow():"Non enregistré (mémoire seulement)");
+ if(ok)planifierDossier();
  if(fusion&&fusion.change){if(fusion.touche)remplir();montrerAutreOnglet();}
 }
 function idsDe(brut){
@@ -1163,6 +1215,7 @@ function panneauSynthese(){
   h("button",{type:"button",class:"btn",id:"btn-export-csv-synthese"},"Exporter toutes les sessions (CSV)"),
   h("button",{type:"button",class:"btn",id:"btn-imprimer-synthese"},"Imprimer / PDF"));
  p.append(
+  h("div",{id:"bilan-visuel"}),
   h("div",{class:"carte"},h("h3",null,"Scores composites T1"),bloc,h("p",{class:"aide"},"Un item NA ou non coté est ignoré : aucune valeur n'est imputée. Les items T0 n'entrent dans aucun score.")),
   h("div",{class:"carte bloc-manques"},h("h3",{id:"titre-manques"},"À compléter"),listeManquants,aucun),
   h("div",{class:"carte"},
@@ -1225,7 +1278,7 @@ function majDerive(){
   e.inc.textContent=m>0?"incomplet : "+m+" item(s) non coté(s) ou NA":"";
  });
  autreBloc.hidden=I.installation!=="autre";
- if(etape==="synthese")majManquants(s);
+ if(etape==="synthese"){majManquants(s);dessinerBilanVisuel();}
  majAide(s);
  if(!$("panneau-sessions").hidden)majListe();
 }
@@ -1249,7 +1302,7 @@ function allerA(cle,sansDefil,demarrage){
  $("btn-suivant").disabled=idx===ETAPES.length-1;
  $("position-etape").textContent="Étape "+(idx+1)+" / "+ETAPES.length;
  try{localStorage.setItem(CLE_E,cle);}catch(e){}
- if(cle==="synthese")majManquants(courant());
+ if(cle==="synthese"){majManquants(courant());dessinerBilanVisuel();}
  autoTous(document);
  majOutils();
  if(!demarrage)proposerPhase(cle);
@@ -1359,7 +1412,7 @@ function supprimer(id){
  if(!s)return;
  const I=s.identification;
  if(!window.confirm("Supprimer la session "+(I.code_sujet||"sans code")+" (S"+(I.session_no||"?")+", "+(dateFr(I.date)||"date ?")+") ?\nCette action est définitive."))return;
- supprimes.add(id);viderPile();
+ supprimes.add(id);viderPile();noterSuppression(s);
  sessions=sessions.filter(x=>x.id!==id);
  if(!sessions.length)sessions.push(vierge());
  if(id===courante){courante=sessions[sessions.length-1].id;}
@@ -1369,7 +1422,7 @@ function supprimer(id){
 function effacerTout(){
  if(!window.confirm("Effacer toutes les données de ce poste ?\n\nToutes les sessions enregistrées dans ce navigateur seront supprimées définitivement. Pensez à faire une sauvegarde complète avant."))return;
  fermerVue(false);viderPile();
- sessions.forEach(s=>supprimes.add(s.id));
+ sessions.forEach(s=>{supprimes.add(s.id);noterSuppression(s);});
  try{
   Object.keys(localStorage).filter(k=>k.indexOf("grilleHaptique.")===0).forEach(k=>localStorage.removeItem(k));
  }catch(e){}
@@ -1424,6 +1477,7 @@ function importer(texte){
 }
 function preparerImpression(){
  panneaux.forEach(p=>{p.hidden=false;});
+ dessinerBilanVisuel();
  autoTous(document);
 }
 function restaurerImpression(){
@@ -1717,6 +1771,177 @@ function dessinerBilan(B){
   h("section",{id:"bilan-t2"},h("h4",null,"T2 : évolution 10 minutes après le retrait"),legende("legende-t2",t2),
    figure("T2 - Rémanence et post-effet",svgGrille(B,"t2",B.t2))));
 }
+/* Bilan visuel de session */
+const T2_COURT={tonus:"Tonus",posture:"Posture",emotion:"Émotion",relation:"Relation"};
+const T2_MOT={"-1":"défavorable","0":"inchangé","1":"favorable"};
+const bvRatio=(v,min,max)=>v===null||v===undefined?null:Math.round(Math.max(0,Math.min(1,(v-min)/(max-min)))*1000)/1000;
+const bvNb=v=>String(Math.round(v*100)/100).replace(".",",");
+const bvSigne=d=>d===null?"":d>0?"+"+d:String(d);
+function bilanVisuel(){
+ const s=courant(),sc=calculerScores(s),I=s.identification;
+ const bornes=k=>{const d=SCORES.find(x=>x.cle===k);return{valeur:sc[k],min:d.min,max:d.max,manquants:sc.manquants[k]};};
+ const items=CODES.map(c=>{
+  const a=AXES.find(x=>x.items.some(i=>i.c===c));
+  return{code:c,groupe:a?"AXE"+a.n:"T0",valeur:s.cotations[c]};
+ });
+ let precedente=null;
+ if(I.code_sujet){
+  const g=trouver(I.code_sujet),i=g?g.ss.indexOf(s):-1;
+  if(i>0){
+   const p=g.ss[i-1],pc=calculerScores(p),d={};
+   ["axe1","axe2","axe3","axe4","total"].forEach(k=>{d[k]=sc[k]===null||pc[k]===null?null:sc[k]-pc[k];});
+   precedente={id:p.id,session_no:p.identification.session_no,date:p.identification.date,deltas:d};
+  }
+ }
+ return{
+  total:bornes("total"),
+  axes:AXES.map(a=>Object.assign({cle:a.score,libelle:a.nom},bornes(a.score))),
+  items:items,
+  t2:T2.map(d=>({cle:d.k,libelle:T2_COURT[d.k],valeur:s.t2[d.k].evolution})),
+  physio:PHYSIO.map(m=>({cle:m.k,libelle:m.l,unite:m.u,points:TEMPS.map(t=>({temps:t.k,valeur:s.physio[m.k][t.k]}))})),
+  precedente:precedente
+ };
+}
+function bvSvg(W,H,label,extra){
+ return sv("svg",Object.assign({class:"bil bv",role:"img","aria-label":label,focusable:"false",width:W,height:H,viewBox:"0 0 "+W+" "+H},extra));
+}
+function bvFigure(id,label,svg){
+ return h("div",{id:id,class:"bv-fig",role:"img","aria-label":label},svg);
+}
+function bvJauge(B){
+ const t=B.total,cx=120,cy=114,R=88,q=bvRatio(t.valeur,t.min,t.max);
+ const pt=(r,rho)=>{const a=Math.PI*(1-r);return[r1(cx+rho*Math.cos(a)),r1(cy-rho*Math.sin(a))];};
+ const label=t.valeur===null?"Indice global : non calculable":"Indice global : "+t.valeur+" sur "+t.max;
+ const svg=bvSvg(240,150,label);
+ svg.append(sv("path",{class:"bv-piste",d:"M "+(cx-R)+" "+cy+" A "+R+" "+R+" 0 0 1 "+(cx+R)+" "+cy}));
+ if(q!==null){
+  const f=pt(q,R);
+  svg.append(sv("path",{class:"bv-arc","data-vis":"jauge-arc","data-ratio":q,d:"M "+(cx-R)+" "+cy+" A "+R+" "+R+" 0 0 1 "+f[0]+" "+f[1]}));
+ }
+ const z=bvRatio(0,t.min,t.max),a=pt(z,R-15),b=pt(z,R+7);
+ svg.append(sv("line",{class:"bv-rep",x1:a[0],y1:a[1],x2:b[0],y2:b[1]}),
+  svt({class:"bv-grand","text-anchor":"middle",x:cx,y:cy-6,"font-size":34,"font-weight":700},t.valeur===null?"-":String(t.valeur)),
+  svt({class:"t-mut","text-anchor":"middle",x:cx,y:cy+14,"font-size":12},"sur "+t.max),
+  svt({class:"t-mut","text-anchor":"middle",x:cx-R,y:cy+16,"font-size":11},String(t.min)),
+  svt({class:"t-mut","text-anchor":"middle",x:cx+R,y:cy+16,"font-size":11},String(t.max)));
+ return bvFigure("vis-jauge",label,svg);
+}
+function bvRadar(B){
+ const W=320,H=262,cx=160,cy=134,R=80,ANG=[-90,0,90,180].map(d=>d*Math.PI/180);
+ const P=(i,rho)=>[r1(cx+R*rho*Math.cos(ANG[i])),r1(cy+R*rho*Math.sin(ANG[i]))];
+ const rat=B.axes.map(a=>bvRatio(a.valeur,a.min,a.max));
+ const label="Axes : "+B.axes.map((a,i)=>"Axe "+(i+1)+" "+(a.valeur===null?"non calculable":a.valeur+" sur "+a.max)).join(", ");
+ const svg=bvSvg(W,H,label);
+ [0.25,0.5,0.75,1].forEach(q=>svg.append(sv("polygon",{class:"bv-anneau","data-vis":"radar-anneau","data-ratio":q,points:[0,1,2,3].map(i=>P(i,q).join(",")).join(" ")})));
+ [0,1,2,3].forEach(i=>{const e=P(i,1);svg.append(sv("line",{class:"axe",x1:cx,y1:cy,x2:e[0],y2:e[1]}));});
+ svg.append(sv("polygon",{class:"bv-forme","data-vis":"radar-forme",points:[0,1,2,3].map(i=>P(i,rat[i]===null?0:rat[i]).join(",")).join(" ")}));
+ B.axes.forEach((a,i)=>{
+  const p=P(i,rat[i]===null?0:rat[i]);
+  svg.append(sv("circle",{class:"bv-sommet","data-vis":"radar-sommet","data-cle":a.cle,"data-valeur":a.valeur===null?"":a.valeur,"data-ratio":rat[i],cx:p[0],cy:p[1],r:5}));
+ });
+ const pos=[[cx,cy-R-22,"middle"],[cx+R+10,cy-2,"start"],[cx,cy+R+18,"middle"],[cx-R-10,cy-2,"end"]];
+ B.axes.forEach((a,i)=>{
+  const o=pos[i];
+  svg.append(svt({x:o[0],y:o[1],"text-anchor":o[2],"font-size":12,"font-weight":700},"Axe "+(i+1)),
+   svt({class:"t-mut",x:o[0],y:o[1]+15,"text-anchor":o[2],"font-size":12},(a.valeur===null?"-":a.valeur)+" / "+a.max));
+ });
+ return bvFigure("vis-radar",label,svg);
+}
+function bvBande(B){
+ const G=[["T0","T0"],["AXE1","Axe 1"],["AXE2","Axe 2"],["AXE3","Axe 3"],["AXE4","Axe 4"]];
+ const cw=44,ch=32,pas=48,gx=56,rh=54,W=gx+5*pas,H=G.length*rh;
+ const nb=B.items.filter(i=>i.valeur!==null).length;
+ const label="Items cotés : "+nb+" sur "+B.items.length+" ; "+B.items.filter(i=>i.valeur==="NA").length+" NA";
+ const svg=bvSvg(W,H,label);
+ svg.append(sv("defs",null,sv("pattern",{id:"vis-hachure",width:5,height:5,patternUnits:"userSpaceOnUse",patternTransform:"rotate(45)"},sv("line",{class:"hach",x1:0,y1:0,x2:0,y2:5}))));
+ G.forEach((g,r)=>{
+  const top=r*rh+4;
+  svg.append(svt({x:0,y:top+ch/2+5,"font-size":12,"font-weight":700},g[1]));
+  B.items.filter(i=>i.groupe===g[0]).forEach((it,c)=>{
+   const x=gx+c*pas,v=it.valeur;
+   const cls=v===null?"cot-vide":v==="NA"?"cot-na":"cot-"+v;
+   const ce=sv("g",{class:"bv-c-"+(v===null?"vide":v==="NA"?"na":v),"data-vis":"cellule","data-code":it.code,"data-valeur":v===null?"":v},
+    svTitre(it.code+" : "+(v===null?"non coté":v)),
+    sv("rect",{class:cls,x:x,y:top,width:cw,height:ch}));
+   if(v==="NA")ce.append(sv("rect",{class:"hachure",x:x,y:top,width:cw,height:ch,fill:"url(#vis-hachure)"}));
+   if(v!==null)ce.append(svt({class:"tc-"+String(v).toLowerCase(),x:x+cw/2,y:top+ch/2+5,"text-anchor":"middle","font-size":14,"font-weight":700},String(v)));
+   ce.append(svt({class:"t-mut",x:x+cw/2,y:top+ch+13,"text-anchor":"middle","font-size":11},it.code.slice(1)));
+   svg.append(ce);
+  });
+ });
+ return bvFigure("vis-bande-items",label,svg);
+}
+function bvT2(B){
+ const W=320,H=112;
+ const label="Évolution T2 : "+B.t2.map(d=>d.libelle+" "+(d.valeur===null?"non renseigné":bvSigne(d.valeur)||"0")).join(", ");
+ const svg=bvSvg(W,H,label);
+ B.t2.forEach((d,i)=>{
+  const cx=40+80*i,cy=50,v=d.valeur;
+  const g=sv("g",{"data-vis":"t2","data-cle":d.cle,"data-valeur":v===null?"":v},svTitre(d.libelle+" : "+(v===null?"non renseigné":T2_MOT[String(v)])));
+  g.append(svt({x:cx,y:17,"text-anchor":"middle","font-size":12,"font-weight":700},d.libelle));
+  if(v===1)g.append(sv("polygon",{class:"t2-pos","data-forme":"triangle-haut",points:[[0,-15],[16,12],[-16,12]].map(q=>(cx+q[0])+","+(cy+q[1])).join(" ")}));
+  else if(v===-1)g.append(sv("polygon",{class:"t2-neg","data-forme":"triangle-bas",points:[[0,15],[16,-12],[-16,-12]].map(q=>(cx+q[0])+","+(cy+q[1])).join(" ")}));
+  else if(v===0)g.append(sv("rect",{class:"t2-zero","data-forme":"carre",x:cx-13,y:cy-13,width:26,height:26}));
+  else g.append(sv("rect",{class:"t2-vide bv-pointille","data-forme":"vide",x:cx-13,y:cy-13,width:26,height:26}));
+  g.append(svt({x:cx,y:86,"text-anchor":"middle","font-size":15,"font-weight":700},v===null?"-":v>0?"+1":String(v)),
+   svt({class:"t-mut",x:cx,y:102,"text-anchor":"middle","font-size":11},v===null?"non renseigné":T2_MOT[String(v)]));
+  svg.append(g);
+ });
+ return bvFigure("vis-t2",label,svg);
+}
+function bvPhysio(m){
+ const W=260,H=134,X=[40,100,160,220],hi=40,lo=96,NOMS=["T0","T1","Rupture","T2"];
+ const vals=m.points.map(p=>p.valeur).filter(v=>v!==null),mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);
+ const Y=v=>mx===mn?(hi+lo)/2:r1(lo-(v-mn)*(lo-hi)/(mx-mn));
+ const label=m.libelle+" ("+m.unite+") : "+m.points.map((p,i)=>NOMS[i]+" "+(p.valeur===null?"non saisi":bvNb(p.valeur))).join(", ");
+ const svg=bvSvg(W,H,label,{"data-vis":"physio","data-cle":m.cle});
+ X.forEach(x=>svg.append(sv("line",{class:"grad",x1:x,x2:x,y1:26,y2:lo+10})));
+ svg.append(svt({class:"t-mut",x:4,y:13,"font-size":11},m.unite));
+ let run=[];
+ const fin=()=>{if(run.length>1)svg.append(sv("polyline",{class:"ligne","data-vis":"physio-ligne","data-cle":m.cle,fill:"none",points:run.map(i=>X[i]+","+Y(m.points[i].valeur)).join(" ")}));run=[];};
+ m.points.forEach((p,i)=>{if(p.valeur===null)fin();else run.push(i);});
+ fin();
+ m.points.forEach((p,i)=>{
+  svg.append(svt({class:"t-mut",x:X[i],y:lo+28,"text-anchor":"middle","font-size":11},NOMS[i]));
+  if(p.valeur===null)return;
+  svg.append(sv("circle",{class:"bv-pt","data-vis":"physio-point","data-cle":m.cle,"data-temps":p.temps,"data-valeur":p.valeur,cx:X[i],cy:Y(p.valeur),r:4.5}),
+   svt({class:"halo",x:X[i],y:Y(p.valeur)-9,"text-anchor":"middle","font-size":11,"font-weight":700},bvNb(p.valeur)));
+ });
+ return svg;
+}
+function bvDelta(cle,nom,d){
+ const txt=bvSigne(d);
+ const sens=d===null?"nd":d>0?"haut":d<0?"bas":"egal";
+ const lib={haut:"en hausse",bas:"en baisse",egal:"stable",nd:"non calculable"}[sens];
+ const f=sens==="haut"?"M9 3 L16 14 H2 Z":sens==="bas"?"M9 15 L16 4 H2 Z":sens==="egal"?"M3 6 H15 M3 12 H15":"M4 9 H14";
+ const fl=sv("svg",{class:"bil bv-fleche bv-f-"+sens,role:"img","aria-label":lib,focusable:"false",width:18,height:18,viewBox:"0 0 18 18"},sv("path",{d:f}));
+ return h("li",{class:"bv-delta","data-vis":"delta","data-cle":cle,"data-delta":txt},h("span",{class:"bv-d-nom"},nom),fl,h("strong",null,d===null?"-":txt));
+}
+function bvBloc(titre,contenu){return h("section",{class:"bv-bloc"},h("h4",null,titre),contenu);}
+function dessinerBilanVisuel(){
+ const el=$("bilan-visuel"),s=courant();
+ if(!el||!s)return;
+ const B=bilanVisuel(),code=s.identification.code_sujet;
+ const incomplet=B.total.manquants>0?h("p",{class:"bv-note"},"Indice global incomplet : "+B.total.manquants+" item(s) T1 non coté(s) ou NA, ignoré(s) sans imputation."):null;
+ const leg=h("ul",{id:"vis-legende-items",class:"bv-leg"},ECHELLE.map(e=>h("li",null,h("span",{class:"sw sw-"+(e.v==="NA"?"na":e.v),"aria-hidden":"true"},e.v),e.nom)));
+ const mesures=B.physio.filter(m=>m.points.some(p=>p.valeur!==null));
+ const physio=h("div",{id:"vis-physio"},mesures.length?h("div",{class:"bv-physio"},mesures.map(m=>h("figure",{class:"bv-physio-fig"},h("figcaption",null,m.libelle+" ("+m.unite+")"),bvPhysio(m)))):h("p",{class:"bv-note"},"Aucune mesure saisie"));
+ const comp=h("div",{id:"vis-comparaison"});
+ if(B.precedente){
+  const p=B.precedente,d=p.deltas;
+  comp.append(h("ul",{class:"bv-deltas"},bvDelta("axe1","Axe 1",d.axe1),bvDelta("axe2","Axe 2",d.axe2),bvDelta("axe3","Axe 3",d.axe3),bvDelta("axe4","Axe 4",d.axe4),bvDelta("total","Indice global",d.total)),
+   h("p",{class:"bv-note","data-vis":"comparaison-texte"},"par rapport à S"+(p.session_no===null?"?":p.session_no)+" ("+(dateFr(p.date)||"date ?")+")"));
+ }else if(code)comp.append(h("p",{class:"bv-note"},"Première session de ce participant"));
+ el.replaceChildren(
+  h("h3",null,"Bilan visuel de la session"),
+  h("div",{class:"bv-grille"},
+   bvBloc("Indice global",[bvJauge(B),incomplet]),
+   bvBloc("Les 4 axes",bvRadar(B)),
+   bvBloc("Items cotés",[bvBande(B),leg,h("p",{class:"bv-note"},"Case vide : item non coté. V1.4 est un score inversé, soustrait dans l'axe 1.")]),
+   bvBloc("Évolution T2",bvT2(B))),
+  bvBloc("Mesures physiologiques",physio),
+  h("section",{class:"bv-bloc",id:"bv-comparaison-bloc",hidden:!code},h("h4",null,"Comparaison avec la session précédente"),comp));
+}
 function dessinerVue(){
  const g=vue.cle===null?null:groupes().find(x=>x.cle===vue.cle)||null;
  if(!g)vue.cle=null;
@@ -1771,6 +1996,233 @@ function brancherVue(){
   else if(os!==null){ouvrirSession(os);allerA("session");}
   else if(ds!==null)supprimer(ds);
  });
+}
+/* Sauvegarde dans un dossier et stockage durable */
+const NOM_TOUT="grille-haptique_sauvegarde.json",BASE_IDB="grilleHaptique.v1.dossier";
+const AIDE_DOSSIER="Sauvegarde locale en fichiers sur ce poste, un dossier par participant. Ce sont des données de santé pseudonymisées : ne les placez pas dans un stockage partagé ou en ligne. Pour retrouver des résultats, importez les fichiers .json dans l'appli sur ce poste.";
+const dossierDispo=()=>typeof window.showDirectoryPicker==="function";
+const dos={etat:dossierDispo()?"inactif":"indisponible",handle:null,nom:"",der:null,ecrits:new Map(),sig:null,suppr:[],timer:0,chaine:Promise.resolve(),msg:""};
+let durable=null;
+function majDossierUI(){
+ const e=dos.etat,b=$("etat-dossier");
+ b.setAttribute("data-etat-dossier",e);
+ let t;
+ if(e==="indisponible")t="Sauvegarde dans un dossier : indisponible sur ce navigateur";
+ else if(e==="inactif")t="Sauvegarde dans un dossier : non activée";
+ else if(e==="actif")t="Sauvegarde dans le dossier "+dos.nom+" : "+(dos.der?"dernière écriture à "+heureDe(dos.der):"première écriture en cours");
+ else if(e==="a-reautoriser")t="Sauvegarde dans le dossier "+dos.nom+" : autorisation à renouveler";
+ else t="Sauvegarde dans le dossier "+dos.nom+" : erreur d'écriture"+(dos.msg?" ("+dos.msg+")":"")+". Nouvelle tentative à la prochaine modification.";
+ b.textContent=t;
+ $("btn-dossier-sauvegarde").disabled=e==="indisponible";
+ $("btn-dossier-reautoriser").hidden=e!=="a-reautoriser";
+ $("btn-lire-dossier").hidden=!(e==="actif"||e==="erreur");
+ $("aide-dossier").textContent=e==="indisponible"?"Disponible dans Chrome et Edge sur ordinateur":AIDE_DOSSIER;
+}
+function etatDossier(){return{etat:dos.etat,nom:dos.nom,derniereEcriture:dos.der};}
+const sousDossier=c=>c?c:"sans-code";
+const idFichier=id=>String(id).replace(/[^A-Za-z0-9_-]/g,"-");
+function cheminSession(s){
+ const I=s.identification;
+ return{dir:sousDossier(I.code_sujet),nom:"grille-haptique_"+partie(I.code_sujet)+"_S"+partie(I.session_no)+"_"+partie(I.date)+"_"+idFichier(s.id)+".json"};
+}
+function ouvrirIdb(){
+ return new Promise((ok,ko)=>{
+  const r=indexedDB.open(BASE_IDB,1);
+  r.onupgradeneeded=()=>{r.result.createObjectStore("d");};
+  r.onsuccess=()=>ok(r.result);
+  r.onerror=()=>ko(r.error);
+  r.onblocked=()=>ko(new Error("bloquée"));
+ });
+}
+async function memoriserDossier(hd){
+ try{
+  const db=await ouvrirIdb();
+  try{
+   await new Promise((ok,ko)=>{
+    const t=db.transaction("d","readwrite");
+    t.objectStore("d").put(hd,"racine");
+    t.oncomplete=ok;t.onerror=()=>ko(t.error);t.onabort=()=>ko(t.error);
+   });
+  }finally{db.close();}
+ }catch(e){}
+}
+async function retrouverDossier(){
+ try{
+  const db=await ouvrirIdb();
+  try{
+   return await new Promise((ok,ko)=>{
+    const r=db.transaction("d","readonly").objectStore("d").get("racine");
+    r.onsuccess=()=>ok(r.result||null);r.onerror=()=>ko(r.error);
+   });
+  }finally{db.close();}
+ }catch(e){return null;}
+}
+async function retirerFichiers(racine,dir,id,protege){
+ try{
+  const d=await racine.getDirectoryHandle(dir);
+  const fin="_"+idFichier(id)+".json",noms=[];
+  for await(const e of d.values()){
+   if(e.kind==="file"&&e.name.endsWith(fin)&&!protege.has(dir+"/"+e.name))noms.push(e.name);
+  }
+  for(const n of noms){try{await d.removeEntry(n);}catch(x){}}
+ }catch(x){}
+}
+async function ecrireFichier(dir,nom,contenu){
+ const f=await dir.getFileHandle(nom,{create:true});
+ const w=await f.createWritable();
+ await w.write(contenu);
+ await w.close();
+}
+async function synchroDossier(){
+ if((dos.etat!=="actif"&&dos.etat!=="erreur")||!dos.handle)return;
+ const racine=dos.handle;
+ const snap=sessions.map(s=>({id:s.id,m:s.modifie_le,ch:cheminSession(s),s:s,json:null}));
+ const vivants=new Set(snap.map(x=>x.id));
+ const protege=new Set(snap.map(x=>x.ch.dir+"/"+x.ch.nom));
+ const sig=snap.map(x=>x.id+"|"+x.m+"|"+x.ch.dir+"/"+x.ch.nom).join("\n");
+ const tout=sig!==dos.sig?JSON.stringify({schema:SCHEMA,exporte_le:new Date().toISOString(),sessions:sessions},null,2)+"\n":null;
+ const aEcrire=snap.filter(x=>{const e=dos.ecrits.get(x.id);return !e||e.m!==x.m||e.dir!==x.ch.dir||e.nom!==x.ch.nom;});
+ aEcrire.forEach(x=>{x.json=JSON.stringify(x.s,null,2)+"\n";});
+ const suppr=dos.suppr.splice(0);
+ try{
+  let ecrit=false;
+  for(const d of suppr){
+   for(const dir of d.dirs)await retirerFichiers(racine,dir,d.id,protege);
+   dos.ecrits.delete(d.id);ecrit=true;
+  }
+  for(const [id,e] of Array.from(dos.ecrits)){
+   if(vivants.has(id))continue;
+   await retirerFichiers(racine,e.dir,id,protege);
+   dos.ecrits.delete(id);ecrit=true;
+  }
+  for(const x of aEcrire){
+   const d=await racine.getDirectoryHandle(x.ch.dir,{create:true});
+   await ecrireFichier(d,x.ch.nom,x.json);
+   const ancien=dos.ecrits.get(x.id);
+   dos.ecrits.set(x.id,{m:x.m,dir:x.ch.dir,nom:x.ch.nom});
+   if(ancien&&(ancien.dir!==x.ch.dir||ancien.nom!==x.ch.nom))await retirerFichiers(racine,ancien.dir,x.id,protege);
+   ecrit=true;
+  }
+  if(tout!==null){await ecrireFichier(racine,NOM_TOUT,tout);dos.sig=sig;ecrit=true;}
+  if(ecrit)dos.der=new Date().toISOString();
+  dos.etat="actif";dos.msg="";
+ }catch(e){
+  dos.sig=null;
+  dos.msg=String(e&&e.message?e.message:e&&e.name?e.name:"erreur inconnue").slice(0,120);
+  dos.etat="erreur";
+  if(e&&(e.name==="NotAllowedError"||e.name==="SecurityError")){
+   try{if(await racine.queryPermission({mode:"readwrite"})!=="granted")dos.etat="a-reautoriser";}catch(x){}
+  }
+ }
+ majDossierUI();
+}
+function ecrireDossier(){
+ clearTimeout(dos.timer);dos.timer=0;
+ dos.chaine=dos.chaine.then(synchroDossier,synchroDossier);
+ return dos.chaine.then(etatDossier);
+}
+function planifierDossier(){
+ if(dos.etat!=="actif"&&dos.etat!=="erreur")return;
+ clearTimeout(dos.timer);
+ dos.timer=setTimeout(ecrireDossier,1500);
+}
+function noterSuppression(s){
+ if(!dos.handle)return;
+ const e=dos.ecrits.get(s.id),dirs=[sousDossier(s.identification.code_sujet)];
+ if(e&&dirs.indexOf(e.dir)<0)dirs.push(e.dir);
+ dos.suppr.push({id:s.id,dirs:dirs});
+}
+function activerDossier(hd){
+ dos.handle=hd;dos.nom=String(hd.name||"");dos.etat="actif";dos.der=null;dos.ecrits=new Map();dos.sig=null;dos.suppr=[];dos.msg="";
+ majDossierUI();
+}
+async function choisirDossier(){
+ let hd;
+ try{hd=await window.showDirectoryPicker({mode:"readwrite"});}
+ catch(e){
+  if(e&&e.name==="AbortError")return;
+  message("Impossible d'ouvrir le sélecteur de dossier"+(e&&e.message?" : "+e.message:"")+".",true);
+  return;
+ }
+ if(!hd)return;
+ activerDossier(hd);
+ memoriserDossier(hd);
+ await ecrireDossier();
+}
+async function reautoriserDossier(){
+ if(!dos.handle)return;
+ let p="denied";
+ try{p=await dos.handle.requestPermission({mode:"readwrite"});}catch(e){p="denied";}
+ if(p==="granted"){
+  dos.etat="actif";dos.ecrits=new Map();dos.sig=null;
+  majDossierUI();
+  await ecrireDossier();
+ }else if(p==="denied"){
+  dos.etat="inactif";dos.handle=null;dos.nom="";dos.suppr=[];
+  majDossierUI();
+ }
+}
+async function restaurerDossier(){
+ if(!dossierDispo())return;
+ const hd=await retrouverDossier();
+ if(!hd||dos.etat!=="inactif"||typeof hd.queryPermission!=="function")return;
+ let p="denied";
+ try{p=await hd.queryPermission({mode:"readwrite"});}catch(e){p="denied";}
+ if(dos.etat!=="inactif")return;
+ if(p==="granted"){activerDossier(hd);await ecrireDossier();}
+ else if(p==="prompt"){dos.handle=hd;dos.nom=String(hd.name||"");dos.etat="a-reautoriser";majDossierUI();}
+}
+async function lireRec(dir,sortie,prof){
+ for await(const e of dir.values()){
+  if(e.kind==="directory"){if(prof<5)await lireRec(e,sortie,prof+1);}
+  else if(e.kind==="file"&&/\.json$/i.test(e.name)){
+   try{
+    const f=await e.getFile();
+    if(f.size>20*1024*1024)continue;
+    sortie.push(await f.text());
+   }catch(x){}
+  }
+ }
+}
+async function lireDossier(){
+ if(!dos.handle||(dos.etat!=="actif"&&dos.etat!=="erreur")){message("Aucun dossier de sauvegarde actif.",true);return 0;}
+ const textes=[];
+ try{await lireRec(dos.handle,textes,0);}
+ catch(e){message("Lecture du dossier impossible"+(e&&e.message?" : "+e.message:"")+".",true);return 0;}
+ const brut=[];
+ textes.forEach(t=>{
+  let o;
+  try{o=JSON.parse(t);}catch(x){return;}
+  if(!o||typeof o!=="object"||Array.isArray(o)||o.schema!==SCHEMA)return;
+  if(Array.isArray(o.sessions))o.sessions.forEach(x=>brut.push(x));
+  else if(o.identification&&typeof o.identification==="object")brut.push(o);
+ });
+ const touchees=new Set();
+ let touche=false;
+ brut.map(normaliser).filter(Boolean).forEach(n=>{
+  const i=sessions.findIndex(x=>x.id===n.id);
+  supprimes.delete(n.id);
+  if(i<0){sessions.push(n);touchees.add(n.id);}
+  else if(Date.parse(n.modifie_le)>Date.parse(sessions[i].modifie_le)){
+   sessions[i]=n;touchees.add(n.id);
+   if(n.id===courante){touche=true;viderPile();}
+  }
+ });
+ sauver();
+ if(touche)remplir();else majDerive();
+ majListe();majVue(false);
+ message(touchees.size+" session(s) importée(s) depuis le dossier");
+ return touchees.size;
+}
+function majStockageUI(){
+ $("etat-stockage").textContent="Stockage durable : "+(durable===true?"oui":durable===false?"non (le navigateur peut l'effacer ; utilisez la sauvegarde dans un dossier)":"inconnu");
+}
+function demanderPersistance(){
+ try{
+  if(navigator.storage&&typeof navigator.storage.persist==="function"){
+   Promise.resolve(navigator.storage.persist()).then(v=>{durable=v===true?true:v===false?false:null;majStockageUI();},()=>{durable=null;majStockageUI();});
+  }
+ }catch(e){}
 }
 /* ZIP et XLSX */
 const TABLE_CRC=(()=>{const t=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t.push(c>>>0);}return t;})();
@@ -1994,7 +2446,7 @@ function construire(){
   if(ev.ctrlKey||ev.metaKey||ev.altKey){return;}
   if(ev.key==="Escape"&&!$("panneau-sessions").hidden){fermerPanneau();return;}
   if(ev.key==="Tab"&&!$("panneau-sessions").hidden){
-   const f=Array.from($("panneau-sessions").querySelectorAll("button:not([disabled])"));
+   const f=Array.from($("panneau-sessions").querySelectorAll("button:not([disabled])")).filter(b=>!b.closest("[hidden]"));
    if(!f.length)return;
    if(ev.shiftKey&&document.activeElement===f[0]){ev.preventDefault();f[f.length-1].focus();}
    else if(!ev.shiftKey&&document.activeElement===f[f.length-1]){ev.preventDefault();f[0].focus();}
@@ -2052,6 +2504,9 @@ function construire(){
  });
  $("btn-export-tout").addEventListener("click",exporterTout);
  $("btn-effacer-tout").addEventListener("click",effacerTout);
+ $("btn-dossier-sauvegarde").addEventListener("click",choisirDossier);
+ $("btn-dossier-reautoriser").addEventListener("click",reautoriserDossier);
+ $("btn-lire-dossier").addEventListener("click",lireDossier);
  $("btn-import-json").addEventListener("click",()=>{$("in-import").value="";$("in-import").click();});
  $("in-import").addEventListener("change",ev=>{
   const f=ev.target.files&&ev.target.files[0];
@@ -2082,6 +2537,10 @@ remplir();
 allerA(etape,true,true);
 sauver();
 if(stockageOk)majEtat("Enregistré à "+heureDe(courant().modifie_le));
+majDossierUI();
+majStockageUI();
+demanderPersistance();
+restaurerDossier();
 
 window.GrilleHaptique={
  etat:()=>{const s=copie(courant());s.scores=calculerScores(s);return s;},
@@ -2092,7 +2551,12 @@ window.GrilleHaptique={
  participants:()=>groupes().map(pubParticipant),
  bilan:code=>{const g=trouver(code);return g?construireBilan(g):null;},
  xlsxOctets:xlsxOctets,
- ouvrirParticipants:ouvrirParticipants
+ ouvrirParticipants:ouvrirParticipants,
+ bilanVisuel:bilanVisuel,
+ ecrireDossier:ecrireDossier,
+ lireDossier:lireDossier,
+ dossier:etatDossier,
+ stockageDurable:()=>durable
 };
 })();
 </script>
