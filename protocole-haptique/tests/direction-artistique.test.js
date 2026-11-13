@@ -100,8 +100,8 @@ check('Aucun element .eyebrow', parVue((m) => (m.eyebrow ? m.eyebrow + ' element
 check('Theme clair : fond de page #F8F7F4 et texte #141413', () => {
   VUES.forEach((v) => { const m = mesures['light/' + v]; if (m.fond !== 'rgb(248, 247, 244)' || m.texte !== 'rgb(20, 20, 19)') throw new Error(v + ' : ' + m.fond + ' / ' + m.texte); });
 });
-check('Theme sombre : fond de page #141413 et texte #F8F7F4', () => {
-  VUES.forEach((v) => { const m = mesures['dark/' + v]; if (m.fond !== 'rgb(20, 20, 19)' || m.texte !== 'rgb(248, 247, 244)') throw new Error(v + ' : ' + m.fond + ' / ' + m.texte); });
+check('Theme sombre : fond de page bleu fonce #0F1B33 et texte #F2F5FB', () => {
+  VUES.forEach((v) => { const m = mesures['dark/' + v]; if (m.fond !== 'rgb(15, 27, 51)' || m.texte !== 'rgb(242, 245, 251)') throw new Error(v + ' : ' + m.fond + ' / ' + m.texte); });
 });
 check('Aucun emoji ni pictogramme dans le texte visible', parVue((m) => (m.pictos ? 'pictogramme ' + m.pictos : '')));
 check('Aucun point d\'exclamation dans le texte visible', parVue((m) => (m.exclam ? 'point d\'exclamation' : '')));

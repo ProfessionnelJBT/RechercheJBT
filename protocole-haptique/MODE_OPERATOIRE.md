@@ -1399,7 +1399,7 @@ Jetons ajoutés sous `@media screen` : `--papier`, `--encre`, `--encre-2`, `--fi
 `--pierre`, `--survol`, `--accent`, `--sur-accent` (valeurs sombres : papier et encre inversés, filets
 `#44403c`). Aucun jeton existant n'est modifié ; l'impression est inchangée (déjà claire).
 
-- Page : fond `#F8F7F4`, texte `#141413` (sombre : `#141413` et `#F8F7F4`). Une seule couleur de
+- Page : fond `#F8F7F4`, texte `#141413` (sombre : fond bleu foncé `#0F1B33`, texte `#F2F5FB`, filets `#2C3F63`). Une seule couleur de
   surface ; les blocs se distinguent par des filets de 1 px (`#d6d3d1`, sombre `#44403c`).
 - Aucun `box-shadow`, aucun `background-image` en dégradé, `border-radius` de 2 px au plus.
   La hachure NA des éléments HTML devient un contour pointillé sur fond pierre.
