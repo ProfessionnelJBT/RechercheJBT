@@ -1,0 +1,2 @@
+Cette branche ne contient que la page publiee (index.html), sans donnee.
+Ne pas y ajouter d'autre fichier : tout ce qui s'y trouve est public.
