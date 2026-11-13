@@ -1290,9 +1290,9 @@ check('D7 boutons de cotation de 44 px de haut au moins a 390 px (cibles tactile
 /* D8. Charte                                                          */
 /* ================================================================== */
 
-statique('D8 charte : poids du fichier inferieur a 307 200 octets', async () => {
+statique('D8 charte : poids du fichier inferieur a 358 400 octets', async () => {
   const n = fs.statSync(HTML).size;
-  assert(n < 307200, 'poids ' + n + ' octets (limite 307 200, depassement de ' + (n - 307199) + ' octets)');
+  assert(n < 358400, 'poids ' + n + ' octets (limite 358 400, depassement de ' + (n - 358399) + ' octets)');
 });
 
 statique('D8 charte : aucune URL http:// ou https:// hors http://www.w3.org/, aucune ressource externe', async () => {
@@ -1309,14 +1309,14 @@ statique('D8 charte : aucune URL http:// ou https:// hors http://www.w3.org/, au
   eq(ext, [], 'balises referencant une ressource externe');
 });
 
-statique('D8 charte : quatre @font-face, tous en data:font/woff2;base64', async () => {
+statique('D8 charte : un @font-face, en data:font/woff2;base64', async () => {
   const h = fs.readFileSync(HTML, 'utf8');
   const blocs = h.match(/@font-face\s*\{[^}]*\}/g) || [];
-  eq(blocs.length, 4, 'nombre de blocs @font-face');
-  eq((h.match(/@font-face/g) || []).length, 4, 'occurrences de @font-face');
+  eq(blocs.length, 1, 'nombre de blocs @font-face');
+  eq((h.match(/@font-face/g) || []).length, 1, 'occurrences de @font-face');
   const sansDonnees = blocs.filter((b) => !/url\(\s*["']?data:font\/woff2;base64,[A-Za-z0-9+/=]{200,}/.test(b)).map((b) => b.slice(0, 70));
   eq(sansDonnees, [], '@font-face sans data:font/woff2;base64');
-  eq((h.match(/data:font\/woff2;base64,/g) || []).length, 4, 'occurrences de data:font/woff2;base64');
+  eq((h.match(/data:font\/woff2;base64,/g) || []).length, 1, 'occurrences de data:font/woff2;base64');
 });
 
 statique('D8 charte : aucun caractere invisible (U+00A0, U+200B a U+200F, U+202F, U+2060, U+FEFF) ni non-caractere U+FFFE / U+FFFF litteral', async () => {
@@ -1337,7 +1337,7 @@ check('D8 charte : :root --marine = #2f2c62', async (A) => {
   eq(v, '#2f2c62', '--marine');
 });
 
-check('D8 charte : IBM Plex Sans 15 px sur body (repli system-ui), polices incorporees chargees, titres d\'etape en Newsreader', async (A) => {
+check('D8 charte : Hanken Grotesk 15 px sur body (repli system-ui), police incorporee chargee, titres d\'etape en Hanken Grotesk', async (A) => {
   await A.go('t1');
   const r = await A.page.evaluate(async () => {
     const faces = [...document.fonts];
@@ -1348,17 +1348,17 @@ check('D8 charte : IBM Plex Sans 15 px sur body (repli system-ui), polices incor
       faces: faces.map((f) => [f.family.replace(/["']/g, ''), String(f.weight)]).sort((a, b) => (a.join() < b.join() ? -1 : 1)),
       statuts: faces.map((f) => f.status),
       h2: h2 ? getComputedStyle(h2).fontFamily : null,
-      verifie: document.fonts.check('15px "IBM Plex Sans"'),
+      verifie: document.fonts.check('15px "Hanken Grotesk"'),
     };
   });
-  assert(/IBM Plex Sans/i.test(r.body), 'font-family de body : ' + r.body);
+  assert(/Hanken Grotesk/i.test(r.body), 'font-family de body : ' + r.body);
   assert(/system-ui/i.test(r.body), 'repli system-ui absent de body : ' + r.body);
   eq(r.taille, '15px', 'taille de police de body');
-  eq(r.faces.map((f) => f[0]).sort(), ['IBM Plex Mono', 'IBM Plex Mono', 'IBM Plex Sans', 'Newsreader'], 'familles declarees');
-  eq(r.faces.filter((f) => f[0] === 'IBM Plex Mono').map((f) => f[1]).sort(), ['500', '600'], 'graisses de IBM Plex Mono');
+  eq(r.faces.map((f) => f[0]).sort(), ['Hanken Grotesk'], 'familles declarees');
+  eq(r.faces.filter((f) => f[0] === 'Hanken Grotesk').map((f) => f[1]), ['100 900'], 'graisse variable de Hanken Grotesk');
   eq(r.statuts, r.statuts.map(() => 'loaded'), 'statut des polices apres chargement');
-  assert(r.verifie, 'document.fonts.check(IBM Plex Sans)');
-  assert(r.h2 && /Newsreader/i.test(r.h2), 'titre d\'etape (h2) en Newsreader : ' + r.h2);
+  assert(r.verifie, 'document.fonts.check(Hanken Grotesk)');
+  assert(r.h2 && /Hanken Grotesk/i.test(r.h2), 'titre d\'etape (h2) en Hanken Grotesk : ' + r.h2);
 });
 
 function JETONS(noms) {

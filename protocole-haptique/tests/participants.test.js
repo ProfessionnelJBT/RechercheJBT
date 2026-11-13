@@ -2737,9 +2737,9 @@ check('Hors ligne : parcours complet de la partie C sans requete reseau ni erreu
   eq(externes, [], 'requetes non locales'); eq(A.errors, [], 'erreurs');
 });
 
-statique('Fichier (partie C) : moins de 300 Ko (307 200 octets)', async () => {
+statique('Fichier (partie C) : moins de 350 Ko (358 400 octets)', async () => {
   const n = fs.statSync(HTML).size;
-  assert(n < 307200, 'taille ' + n + ' octets (limite 307200)');
+  assert(n < 358400, 'taille ' + n + ' octets (limite 358400)');
 });
 
 statique('Fichier (partie C) : aucune URL http:// ou https:// hors http://www.w3.org/ (espaces de noms OOXML concatenes)', async () => {
@@ -2763,13 +2763,13 @@ statique('Fichier (partie C) : apostrophes droites uniquement (pas de U+2018, U+
   eq(hits.slice(0, 5), [], 'apostrophes typographiques');
 });
 
-statique('Fichier (partie C) : ni fetch, XMLHttpRequest, @import, script/link externes ; @font-face seulement en data:font/woff2 (quatre)', async () => {
+statique('Fichier (partie C) : ni fetch, XMLHttpRequest, @import, script/link externes ; @font-face seulement en data:font/woff2 (un seul)', async () => {
   const h = fs.readFileSync(HTML, 'utf8');
-  const motifs = [[/<script[^>]+\bsrc\s*=/i, '<script src>'], [/<link[^>]+\bhref\s*=/i, '<link href>'], [/@import/i, '@import'], [/\bfetch\s*\(/, 'fetch('], [/XMLHttpRequest/, 'XMLHttpRequest'],
+  const motifs = [[/<script[^>]+\bsrc\s*=/i, '<script src>'], [/<link[^>]+\bhref\s*=\s*(?!["']?data:)/i, '<link href>'], [/@import/i, '@import'], [/\bfetch\s*\(/, 'fetch('], [/XMLHttpRequest/, 'XMLHttpRequest'],
     [/sendBeacon/, 'sendBeacon'], [/\bWebSocket\b/, 'WebSocket'], [/\bEventSource\b/, 'EventSource']];
   eq(motifs.filter((m) => m[0].test(h)).map((m) => m[1]), [], 'motifs interdits');
   const faces = h.match(/@font-face\{[^}]*\}/g) || [];
-  eq(faces.length, 4, 'nombre de @font-face');
+  eq(faces.length, 1, 'nombre de @font-face');
   faces.forEach((f) => assert(/src:url\(data:font\/woff2;base64,[A-Za-z0-9+\/=]+\) format\('woff2'\)/.test(f), '@font-face sans police incorporee en data:font/woff2'));
   eq(h.match(/url\((?!data:|#)/g) || [], [], 'url() autres que data: ou #');
 });

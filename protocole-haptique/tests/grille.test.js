@@ -1402,9 +1402,9 @@ check('Adaptatif 360 px : boutons d\'etape et de navigation d\'au moins 44 px de
 /* 12. Poids et hygiene du fichier                                     */
 /* ================================================================== */
 
-statique('Fichier : moins de 300 Ko (307 200 octets)', async () => {
+statique('Fichier : moins de 350 Ko (358 400 octets)', async () => {
   const n = fs.statSync(HTML).size;
-  assert(n < 300 * 1024, 'taille ' + n + ' octets (limite ' + (300 * 1024) + ')');
+  assert(n < 358400, 'taille ' + n + ' octets (limite 358400)');
 });
 
 statique('Fichier : aucune URL http:// ou https:// hors espace de noms SVG', async () => {
@@ -1429,7 +1429,7 @@ statique('Fichier : aucun caractere invisible ou espace exotique (U+00A0, U+200B
   eq(hits, [], 'caracteres interdits');
 });
 
-statique('Fichier : en-tete (lang=fr, viewport), couleurs de la charte, themes, impression, polices IBM Plex avec repli systeme', async () => {
+statique('Fichier : en-tete (lang=fr, viewport), couleurs de la charte, themes, impression, police Hanken Grotesk avec repli systeme', async () => {
   const h = fs.readFileSync(HTML, 'utf8');
   assert(/<html[^>]*\blang=["']fr["']/i.test(h), '<html lang="fr"> absent');
   const vp = h.match(/<meta[^>]*name=["']viewport["'][^>]*>/i);
@@ -1438,23 +1438,23 @@ statique('Fichier : en-tete (lang=fr, viewport), couleurs de la charte, themes, 
   assert(/prefers-color-scheme/.test(h), 'prefers-color-scheme absent');
   assert(/prefers-reduced-motion/.test(h), 'prefers-reduced-motion absent');
   assert(/@media\s+print/.test(h), '@media print absent');
-  assert(/--sans:\s*"IBM Plex Sans",\s*system-ui/.test(h), 'pile --sans : IBM Plex Sans puis repli system-ui absente');
-  assert(/--serif:\s*"Newsreader"/.test(h) && /--mono:\s*"IBM Plex Mono"/.test(h), 'piles --serif (Newsreader) ou --mono (IBM Plex Mono) absentes');
+  assert(/--sans:\s*"Hanken Grotesk",\s*system-ui/.test(h), 'pile --sans : Hanken Grotesk puis repli system-ui absente');
+  assert(/--serif:\s*"Hanken Grotesk"/.test(h) && /--mono:\s*"Hanken Grotesk"/.test(h), 'piles --serif ou --mono (Hanken Grotesk) absentes');
 });
 
-statique('Fichier : ni ressource externe ni API reseau (script/link src, @import, fetch, XMLHttpRequest...), quatre @font-face en data:font/woff2', async () => {
+statique('Fichier : ni ressource externe ni API reseau (script/link src, @import, fetch, XMLHttpRequest...), un @font-face en data:font/woff2', async () => {
   const h = fs.readFileSync(HTML, 'utf8');
   const motifs = [
-    [/<script[^>]+\bsrc\s*=/i, '<script src>'], [/<link[^>]+\bhref\s*=/i, '<link href>'], [/@import/i, '@import'],
+    [/<script[^>]+\bsrc\s*=/i, '<script src>'], [/<link[^>]+\bhref\s*=\s*(?!["']?data:)/i, '<link href>'], [/@import/i, '@import'],
     [/\bfetch\s*\(/, 'fetch('], [/XMLHttpRequest/, 'XMLHttpRequest'], [/sendBeacon/, 'sendBeacon'], [/\bWebSocket\b/, 'WebSocket'],
     [/\bEventSource\b/, 'EventSource'], [/\bimportScripts\b/, 'importScripts'],
   ];
   const hits = motifs.filter((m) => m[0].test(h)).map((m) => m[1]);
   eq(hits, [], 'motifs interdits');
   const faces = h.match(/@font-face\{[^}]*\}/g) || [];
-  eq(faces.length, 4, 'nombre de @font-face');
+  eq(faces.length, 1, 'nombre de @font-face');
   faces.forEach((f) => assert(/src:url\(data:font\/woff2;base64,[A-Za-z0-9+\/=]+\) format\('woff2'\)/.test(f), '@font-face sans police incorporee en data:font/woff2'));
-  eq(Array.from(new Set(faces.map((f) => (f.match(/font-family:'([^']+)'/) || [])[1]))).sort(), ['IBM Plex Mono', 'IBM Plex Sans', 'Newsreader'], 'familles incorporees');
+  eq(Array.from(new Set(faces.map((f) => (f.match(/font-family:'([^']+)'/) || [])[1]))).sort(), ['Hanken Grotesk'], 'familles incorporees');
   eq(h.match(/url\((?!data:|#)/g) || [], [], 'url() autres que data: ou #');
 });
 

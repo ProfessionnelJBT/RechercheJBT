@@ -959,7 +959,7 @@ check('F3 bascule : data-affichage, aria-pressed, cle localStorage seulement apr
   eq(await affichage(A), 'standard', 'retour a standard'); eq(await valeurStockee(A), 'standard', 'cle apres retour'); eq(await A.page.evaluate(() => window.GrilleHaptique.affichage()), 'standard', 'affichage()');
   eq(normAscii(await A.page.evaluate(() => document.getElementById('annonce').textContent)), 'Affichage standard', '#annonce');
   assert([null, 'false'].indexOf(await A.page.getAttribute('#btn-affichage', 'aria-pressed')) >= 0, 'aria-pressed en standard');
-}, OPT_G());
+}, {});
 
 /* mesures en Grand, executees dans la page ; renvoie la liste des ecarts */
 const MESURES_GRAND = () => {
@@ -1073,6 +1073,14 @@ check('F3 impression inchangee : le mode Grand est sans effet en media print', a
 /* ================================================================== */
 /* F4. Ancre d'echelle                                                 */
 /* ================================================================== */
+
+check('Clics souris consecutifs sur trois items a 390 px : les trois cotations sont enregistrees (pas de decalage de mise en page entre l\'appui et le relachement)', async (A) => {
+  await A.page.setViewportSize({ width: 390, height: 844 });
+  await A.go('t1');
+  for (const [c, v] of [['V1.1', '3'], ['V1.2', '2'], ['V1.3', '1']]) await A.page.click('button[data-rate="' + c + '"][data-val="' + v + '"]');
+  const e = await A.page.evaluate(() => GrilleHaptique.etat().cotations);
+  eq([e['V1.1'], e['V1.2'], e['V1.3']], [3, 2, 1], 'cotations apres trois clics consecutifs');
+}, OPT_F1());
 
 const ANCRES = { 0: '0 : Absence / Non observé', 1: '1 : Faible / Transitoire (< 25 % du temps)', 2: '2 : Modéré / Intermittent (25 à 75 %)', 3: '3 : Majeur / Soutenu (> 75 %)', NA: 'NA : Non applicable / Non évaluable' };
 const lireAncre = (A, code) => A.page.evaluate((c) => { const it = document.querySelector('[data-item="' + c + '"]'); const a = it.querySelectorAll('.ancre'); const e = a[0]; return { n: a.length, display: e ? getComputedStyle(e).display : null, rect: e ? e.getBoundingClientRect().height : 0, t: e ? e.textContent.replace(/[ \t\r\n]+/g, ' ').trim() : null, v: e ? e.getAttribute('data-ancre-valeur') : null }; }, code);
