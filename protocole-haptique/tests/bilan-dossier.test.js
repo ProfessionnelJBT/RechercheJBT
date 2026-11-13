@@ -1508,7 +1508,7 @@ DUR('absent', null, /inconnu/); DUR('sans-persist', null, /inconnu/);
 /* Poids, hygiene, parcours complet                                    */
 /* ================================================================== */
 
-statique('Fichier : moins de 300 Ko (307 200 octets)', async () => { const n = fs.statSync(HTML).size; assert(n < 307200, 'taille ' + n + ' octets (limite 307200)'); });
+statique('Fichier : moins de 350 Ko (358 400 octets)', async () => { const n = fs.statSync(HTML).size; assert(n < 358400, 'taille ' + n + ' octets (limite 358400)'); });
 statique('Fichier : aucune URL http:// ou https:// hors http://www.w3.org/', async () => {
   const txt = fs.readFileSync(HTML, 'utf8').split('http://www.w3.org/').join(''); const hits = [];
   txt.split('\n').forEach((l, i) => { if (/https?:\/\//i.test(l)) hits.push((i + 1) + ': ' + l.trim().slice(0, 80)); });

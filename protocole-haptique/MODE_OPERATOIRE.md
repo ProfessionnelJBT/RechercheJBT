@@ -115,22 +115,19 @@ Aides en séance (aucune ne cote à la place de l'observateur) :
 - Un seul fichier HTML, CSS et JS en ligne, JavaScript sans bibliothèque ni framework.
 - **Aucune ressource externe** : pas de CDN, pas d'image distante, aucun `fetch`. Les polices
   sont incorporées en `data:font/woff2;base64` (quatre `@font-face`). Doit fonctionner hors
-  ligne en `file://`.
-- Poids inférieur à **300 Ko (307 200 octets)**. Polices : IBM Plex Sans (corps, 15 px), IBM Plex
+  ligne en `file://` et à l'identique en `http://` ou `https://` (partie H).
+- Poids inférieur à **350 Ko (358 400 octets)**. Polices : IBM Plex Sans (corps, 15 px), IBM Plex
   Mono (500 et 600 : étiquettes, valeurs) et Newsreader (titres), repli `system-ui`.
 - Interface entièrement en français, `<html lang="fr">`, `<meta name="viewport" content="width=device-width, initial-scale=1">`.
 - Adaptatif de 360 px à l'écran large, sans défilement horizontal. Cibles tactiles d'au moins 44 px.
 - Accessible : libellés associés, focus visible, contraste AA, `prefers-reduced-motion` respecté, thème clair et sombre (`prefers-color-scheme`).
 - Tout texte saisi est inséré par `textContent` ou `value`, jamais par `innerHTML` (pas de XSS, y compris à l'import).
 - Hygiène du dépôt : pas d'Unicode invisible ni d'espaces exotiques, pas de bannière ni de commentaire d'attribution dans le code.
-- Identité visuelle : charte de l'application de pilotage. Jetons sur `:root` (clair), redéfinis
-  en sombre (`prefers-color-scheme`, `data-theme="dark"`) : fond `--ground #eef1f0`, encre
-  `--ink #14201f`, pétrole `--teal #0e6b62` (actions, acquis), `--teal-deep #0a4a44`,
-  `--teal-soft #d5e6e3`, ocre `--ochre #b3741b` (partiel, mentions), bleu marine `--marine #2f2c62`
-  (logo, conditions B et C). La rouille n'est jamais utilisée pour les données de l'étude.
-  Rayons 5 / 9 / 14 px. Marque : « J-B Thiéry », étiquette mono « HAPTIQUE », titre Newsreader ;
-  mention de confidentialité en bas de la vue (et à l'impression) ; titres d'étape en Newsreader
-  sous une étiquette mono capitales.
+- Identité visuelle : voir la partie G (habillage). Papier `#F8F7F4`, encre `#141413`, filets de 1 px,
+  aucune ombre ni dégradé, coins de 2 px au plus, accent `#E5484D` réservé au bouton principal.
+  Les couleurs de données (`--bil-*`, jetons `--teal*`, `--ochre*`, `--m1` à `--m4`, `--marine`)
+  gardent leurs valeurs. Marque : « Association J-B Thiéry » en Newsreader, étiquette mono
+  « Haptique » ; mention de confidentialité en bas de la vue (et à l'impression).
 - Ces contraintes valent aussi pour la partie C (participants, bilans, exports), qui
   s'ajoute à B sans en modifier aucun contrat. Limite de poids inchangée : voir l'introduction de C.
 
@@ -461,7 +458,7 @@ et B restent identiques. Les suites de tests existantes doivent rester vertes.
 | Sujet | Règle |
 |---|---|
 | Fichier | Toujours un seul fichier `grille-haptique.html`, hors ligne, sans requête réseau (seuls `Blob` et `URL.createObjectURL` pour les téléchargements). |
-| Poids | Limite commune de l'application : **300 Ko (307 200 octets)**, polices incorporées comprises (voir B1). |
+| Poids | Limite commune de l'application : **350 Ko (358 400 octets)**, polices incorporées comprises (voir B1). |
 | Construction du DOM | `createElement` / `createElementNS` avec `setAttribute` et `textContent`. Interdits, y compris pour le SVG : `innerHTML`, `outerHTML`, `insertAdjacentHTML`, `document.write`. Le XML du `.xlsx` est assemblé en chaînes puis encodé par `TextEncoder` ; il n'entre jamais dans le DOM. |
 | URL dans le source | Un test existant interdit toute sous-chaîne `http://` ou `https://` hors `http://www.w3.org/` (espace de noms SVG, autorisé). Les espaces de noms OOXML (`schemas.openxmlformats.org`) doivent donc être **assemblés par concaténation** (par exemple `"http:" + "//schemas.openxmlformats.org/..."`), jamais écrits d'un bloc. Idem pour toute autre URL. |
 | Pas de `fetch`, `XMLHttpRequest`, `@import`, `<script src>`, `<link href>` ; `@font-face` seulement en `data:font/woff2` (quatre) | Contrôlé par un test existant. |
@@ -1209,10 +1206,10 @@ proposée ou écrite automatiquement ; aucun son. Tests : `tests/ergonomie.test.
 
 ### D8. Charte
 - `:root` définit `--marine:#2f2c62` et les jetons de la charte ; `body` en IBM Plex Sans 15 px ; quatre
-  `@font-face` en `data:font/woff2;base64` ; repli `system-ui`. Poids inférieur à 307 200 octets, aucune
+  `@font-face` en `data:font/woff2;base64` ; repli `system-ui`. Poids inférieur à 358 400 octets, aucune
   URL externe. `@media print` redéfinit tous les jetons de couleur en clair. Les caractères
   non-caractères U+FFFE et U+FFFF de `esc()` sont écrits en séquences d'échappement.
-- Barre d'étapes : compteur mono, barre de progression de 3 px et coche (SVG) pour `t0`, `t1`, `t2`.
+- Barre d'étapes : onglets textuels, compteur mono, filet de progression de 2 px et coche (SVG) pour `t0`, `t1`, `t2`.
 
 ---
 
@@ -1351,7 +1348,7 @@ Ce document : la présente partie E, et dans la partie A les paragraphes « Où 
 quand l'appli est fermée » et « Récupérer les résultats ».
 
 ### E5. Poids et hygiène
-Fichier de moins de 307 200 octets. Aucun caractère invisible ni espace exotique, aucune
+Fichier de moins de 358 400 octets. Aucun caractère invisible ni espace exotique, aucune
 attribution ni commentaire de génération.
 
 ---
@@ -1393,3 +1390,68 @@ valeur du bouton focalisé (`data-ancre-valeur`). Informatif : n'écrit rien.
 ### F5. Rappel T0
 `#rappel-t0` en tête de l'étape T2 : cinq cellules `[data-rappel-t0]` en lecture seule,
 `data-valeur`, mises à jour en direct.
+
+---
+
+## G. Habillage
+
+Jetons ajoutés sous `@media screen` : `--papier`, `--encre`, `--encre-2`, `--filet`, `--filet-fort`,
+`--pierre`, `--survol`, `--accent`, `--sur-accent` (valeurs sombres : papier et encre inversés, filets
+`#44403c`). Aucun jeton existant n'est modifié ; l'impression est inchangée (déjà claire).
+
+- Page : fond `#F8F7F4`, texte `#141413` (sombre : `#141413` et `#F8F7F4`). Une seule couleur de
+  surface ; les blocs se distinguent par des filets de 1 px (`#d6d3d1`, sombre `#44403c`).
+- Aucun `box-shadow`, aucun `background-image` en dégradé, `border-radius` de 2 px au plus.
+  La hachure NA des éléments HTML devient un contour pointillé sur fond pierre.
+- Focus : contour de 2 px encre, décalage de 2 px.
+- Accent `#E5484D` : fond du seul `.btn-prim` visible, texte encre. Étapes Session, T0, T1, T2,
+  Mesures : « Suivant » ; Synthèse : « Exporter la session (JSON) » ; fiche participant :
+  « Nouvelle session pour ce participant » ; liste Participants et panneau Sessions : aucun.
+  Autres boutons : filet 1 px encre sur papier ; destructifs identiques, libellé explicite.
+- En-tête : une ligne sur papier, filet inférieur de 1 px, 72 px au plus à 1280 px. Mot-symbole
+  « Association J-B Thiéry » en Newsreader, étiquette « Haptique » en mono 12 px, résumé de
+  session, minuteur dans une boîte à filet, boutons en texte séparés par des filets verticaux.
+- Barre d'étapes : onglets textuels sur papier, étape active soulignée de 2 px encre, graisse 600,
+  compteurs en mono, coche SVG pour une étape complète. Sous 720 px : barre fixe en bas, filet
+  supérieur de 1 px.
+- Titres : aucun élément `.eyebrow`. Titre de page en Newsreader 2 rem, numéroté par pseudo-élément
+  (1. à 6.) ; sections de la Synthèse numérotées 6.1, 6.2, 6.3. Le texte des `h2` ne change pas.
+- Sections séparées par des filets, sans cartes empilées. Colonne de texte de 68 ch au plus.
+- Items de cotation : ligne à filet, trait gauche de 3 px encre pour l'item actif, barre
+  segmentée de cases carrées ; la valeur choisie prend sa couleur de donnée, en grand mono.
+  Cibles de 44 px au moins (60 px en Grand).
+- Alertes, bandeaux, aides : filet de 1 px, trait gauche de 3 px encre, texte en gras, sans fond
+  teinté. Toast : fond encre, texte papier. Statuts, badges : texte encre avec filet de 1 px.
+- Champs : filet `#a8a29e`, fond papier, focus par contour encre ; libellés 13 px, graisse 600.
+- Tableaux : nombres alignés à droite, mono, `tabular-nums`.
+- Aucun emoji, aucun point d'exclamation dans le texte visible.
+- Contrôle : `tests/direction-artistique.test.js` (styles calculés, 9 vues, deux thèmes).
+
+---
+
+## H. Publication
+
+Le fichier peut être ouvert tel quel en `file://` ou servi en `https://` ; le comportement est
+identique (`tests/publication.test.js`).
+
+### H1. Ce qui rend la publication sûre
+- Le fichier ne contient aucune donnée : aucune session, aucun code de participant, aucun e-mail,
+  aucun chemin de machine.
+- Politique de sécurité en première balise de `<head>` : `default-src 'none'`, scripts et styles en
+  ligne seulement, images et polices en `data:` ou `blob:`, **`connect-src 'none'`**, aucun cadre,
+  formulaire, objet ni worker. Le navigateur ne peut envoyer aucune requête.
+- `<meta name="robots" content="noindex, nofollow, noarchive">` et `referrer` à `no-referrer`.
+- Les exports sont des téléchargements de `Blob` (autorisés par cette politique).
+
+### H2. Comment publier
+- Publier **seulement `grille-haptique.html` renommé `index.html`**, dans un dépôt ou un
+  hébergement statique dédié. Jamais le dépôt entier : protocole, tests et documents internes
+  restent privés.
+- Ne jamais publier de fichier d'export (`.json`, `.csv`, `.xlsx`, PDF de bilan).
+
+### H3. Où sont les données
+- Les sessions sont propres à chaque origine : la copie ouverte en `file://` et la page en ligne
+  ne partagent pas leurs sessions, pas plus que deux navigateurs ou deux adresses.
+- Le transfert passe par l'export puis l'import du fichier `.json`. À l'ouverture d'un export sur
+  une autre origine, rien ne se fusionne tout seul : l'import est une action explicite.
+- Une page publique est ouverte à tous, mais vide.

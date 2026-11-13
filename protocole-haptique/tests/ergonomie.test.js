@@ -1290,9 +1290,9 @@ check('D7 boutons de cotation de 44 px de haut au moins a 390 px (cibles tactile
 /* D8. Charte                                                          */
 /* ================================================================== */
 
-statique('D8 charte : poids du fichier inferieur a 307 200 octets', async () => {
+statique('D8 charte : poids du fichier inferieur a 358 400 octets', async () => {
   const n = fs.statSync(HTML).size;
-  assert(n < 307200, 'poids ' + n + ' octets (limite 307 200, depassement de ' + (n - 307199) + ' octets)');
+  assert(n < 358400, 'poids ' + n + ' octets (limite 358 400, depassement de ' + (n - 358399) + ' octets)');
 });
 
 statique('D8 charte : aucune URL http:// ou https:// hors http://www.w3.org/, aucune ressource externe', async () => {

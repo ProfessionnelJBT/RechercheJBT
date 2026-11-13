@@ -1402,9 +1402,9 @@ check('Adaptatif 360 px : boutons d\'etape et de navigation d\'au moins 44 px de
 /* 12. Poids et hygiene du fichier                                     */
 /* ================================================================== */
 
-statique('Fichier : moins de 300 Ko (307 200 octets)', async () => {
+statique('Fichier : moins de 350 Ko (358 400 octets)', async () => {
   const n = fs.statSync(HTML).size;
-  assert(n < 300 * 1024, 'taille ' + n + ' octets (limite ' + (300 * 1024) + ')');
+  assert(n < 358400, 'taille ' + n + ' octets (limite 358400)');
 });
 
 statique('Fichier : aucune URL http:// ou https:// hors espace de noms SVG', async () => {
@@ -1445,7 +1445,7 @@ statique('Fichier : en-tete (lang=fr, viewport), couleurs de la charte, themes, 
 statique('Fichier : ni ressource externe ni API reseau (script/link src, @import, fetch, XMLHttpRequest...), quatre @font-face en data:font/woff2', async () => {
   const h = fs.readFileSync(HTML, 'utf8');
   const motifs = [
-    [/<script[^>]+\bsrc\s*=/i, '<script src>'], [/<link[^>]+\bhref\s*=/i, '<link href>'], [/@import/i, '@import'],
+    [/<script[^>]+\bsrc\s*=/i, '<script src>'], [/<link[^>]+\bhref\s*=\s*(?!["']?data:)/i, '<link href>'], [/@import/i, '@import'],
     [/\bfetch\s*\(/, 'fetch('], [/XMLHttpRequest/, 'XMLHttpRequest'], [/sendBeacon/, 'sendBeacon'], [/\bWebSocket\b/, 'WebSocket'],
     [/\bEventSource\b/, 'EventSource'], [/\bimportScripts\b/, 'importScripts'],
   ];
