@@ -116,8 +116,8 @@ Aides en séance (aucune ne cote à la place de l'observateur) :
 - **Aucune ressource externe** : pas de CDN, pas d'image distante, aucun `fetch`. Les polices
   sont incorporées en `data:font/woff2;base64` (quatre `@font-face`). Doit fonctionner hors
   ligne en `file://` et à l'identique en `http://` ou `https://` (partie H).
-- Poids inférieur à **350 Ko (358 400 octets)**. Polices : IBM Plex Sans (corps, 15 px), IBM Plex
-  Mono (500 et 600 : étiquettes, valeurs) et Newsreader (titres), repli `system-ui`.
+- Poids inférieur à **350 Ko (358 400 octets)**. Police unique : Hanken Grotesk (variable, graisses 100 à 900, SIL OFL 1.1), corps
+  15 px, titres en graisse 600, chiffres tabulaires, incorporée en base64, repli `system-ui`.
 - Interface entièrement en français, `<html lang="fr">`, `<meta name="viewport" content="width=device-width, initial-scale=1">`.
 - Adaptatif de 360 px à l'écran large, sans défilement horizontal. Cibles tactiles d'au moins 44 px.
 - Accessible : libellés associés, focus visible, contraste AA, `prefers-reduced-motion` respecté, thème clair et sombre (`prefers-color-scheme`).
@@ -126,7 +126,7 @@ Aides en séance (aucune ne cote à la place de l'observateur) :
 - Identité visuelle : voir la partie G (habillage). Papier `#F8F7F4`, encre `#141413`, filets de 1 px,
   aucune ombre ni dégradé, coins de 2 px au plus, accent `#E5484D` réservé au bouton principal.
   Les couleurs de données (`--bil-*`, jetons `--teal*`, `--ochre*`, `--m1` à `--m4`, `--marine`)
-  gardent leurs valeurs. Marque : « Association J-B Thiéry » en Newsreader, étiquette mono
+  gardent leurs valeurs. Marque : « Association J-B Thiéry » en Hanken Grotesk, étiquette
   « Haptique » ; mention de confidentialité en bas de la vue (et à l'impression).
 - Ces contraintes valent aussi pour la partie C (participants, bilans, exports), qui
   s'ajoute à B sans en modifier aucun contrat. Limite de poids inchangée : voir l'introduction de C.
@@ -1205,7 +1205,7 @@ proposée ou écrite automatiquement ; aucun son. Tests : `tests/ergonomie.test.
 - Boutons d'en-tête et de navigation d'au moins 44 px.
 
 ### D8. Charte
-- `:root` définit `--marine:#2f2c62` et les jetons de la charte ; `body` en IBM Plex Sans 15 px ; quatre
+- `:root` définit `--marine:#2f2c62` et les jetons de la charte ; `body` en Hanken Grotesk 15 px ; un seul
   `@font-face` en `data:font/woff2;base64` ; repli `system-ui`. Poids inférieur à 358 400 octets, aucune
   URL externe. `@media print` redéfinit tous les jetons de couleur en clair. Les caractères
   non-caractères U+FFFE et U+FFFF de `esc()` sont écrits en séquences d'échappement.
@@ -1409,12 +1409,12 @@ Jetons ajoutés sous `@media screen` : `--papier`, `--encre`, `--encre-2`, `--fi
   « Nouvelle session pour ce participant » ; liste Participants et panneau Sessions : aucun.
   Autres boutons : filet 1 px encre sur papier ; destructifs identiques, libellé explicite.
 - En-tête : une ligne sur papier, filet inférieur de 1 px, 72 px au plus à 1280 px. Mot-symbole
-  « Association J-B Thiéry » en Newsreader, étiquette « Haptique » en mono 12 px, résumé de
+  « Association J-B Thiéry » en Hanken Grotesk, étiquette « Haptique » 12 px, résumé de
   session, minuteur dans une boîte à filet, boutons en texte séparés par des filets verticaux.
 - Barre d'étapes : onglets textuels sur papier, étape active soulignée de 2 px encre, graisse 600,
   compteurs en mono, coche SVG pour une étape complète. Sous 720 px : barre fixe en bas, filet
   supérieur de 1 px.
-- Titres : aucun élément `.eyebrow`. Titre de page en Newsreader 2 rem, numéroté par pseudo-élément
+- Titres : aucun élément `.eyebrow`. Titre de page en Hanken Grotesk 2 rem, graisse 600, numéroté par pseudo-élément
   (1. à 6.) ; sections de la Synthèse numérotées 6.1, 6.2, 6.3. Le texte des `h2` ne change pas.
 - Sections séparées par des filets, sans cartes empilées. Colonne de texte de 68 ch au plus.
 - Items de cotation : ligne à filet, trait gauche de 3 px encre pour l'item actif, barre

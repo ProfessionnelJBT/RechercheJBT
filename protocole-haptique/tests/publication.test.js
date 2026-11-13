@@ -188,7 +188,7 @@ function verifierParcours(r, origine) {
   assert(r.bilan > 0, origine.nom + ' : bilan SVG absent');
   assert(r.dossier > 0, origine.nom + ' : faux dossier sans ecriture');
   assert(r.persist >= 1, origine.nom + ' : navigator.storage.persist non appele');
-  assert(r.polices.length === 4 && r.polices.every((s) => s === 'loaded'), origine.nom + ' : polices incorporees ' + JSON.stringify(r.polices));
+  assert(r.polices.length === 1 && r.polices.every((s) => s === 'loaded'), origine.nom + ' : polices incorporees ' + JSON.stringify(r.polices));
   eq(r.csp, [], origine.nom + ' : violations de la politique de securite');
   eq(r.trace.erreurs, [], origine.nom + ' : erreurs console');
   eq(r.trace.externes, [], origine.nom + ' : requetes hors origine');
